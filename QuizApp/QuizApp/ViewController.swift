@@ -30,7 +30,6 @@ final class ViewController: UIViewController {
     }()
     
     // MARK: - Logic Elements
-//    private let currentStory
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -59,7 +58,6 @@ private extension ViewController {
     }
     func setupAppearance() {
         view.backgroundColor = .background
-//        view.backgroundColor = .white
         
         // MARK: textContainer Appearance
         textContainer.backgroundColor = .black
