@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+/// Основной контроллер представления для приложения QuizApp
 final class ViewController: UIViewController {
     // MARK: - UI Elements
     private let textContainer = UIView()
@@ -30,8 +31,10 @@ final class ViewController: UIViewController {
     }()
     
     // MARK: - Logic Elements
+    private var storiesIdCounter: Int = 0
     
     // MARK: - Life Cycle
+    /// Настройка пользовательского интерфейса и его элементов
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -39,6 +42,7 @@ final class ViewController: UIViewController {
         setupLayout()
     }
     
+    /// Добавление градиента для кнопок после появления представления
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addGradientToView(view: upperButton, gradientColors: [UIColor.upperButtonGradientFirst, UIColor.upperButtonGradientSecond])
@@ -67,7 +71,7 @@ private extension ViewController {
         
         // MARK: textLabel Appearance
         textLabel.textColor = .white
-        textLabel.text = "Колибри - единственная\nптица, способная летать\nназад."
+        textLabel.text = Stories.storiesArray[0].title
         textLabel.textAlignment = .left
         textLabel.numberOfLines = 0
         textLabel.font = .systemFont(ofSize: 25, weight: .bold)
@@ -80,6 +84,7 @@ private extension ViewController {
         progressView.progress = 0.0
         addShadowToView(view: progressView)
     }
+    
     func setupLayout() {
         progressView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
@@ -120,7 +125,7 @@ private extension ViewController {
 private extension ViewController {
     func makeButtons(buttons: Buttons) {
         
-        buttons.upperButton.setTitle("Upper", for: .normal)
+        buttons.upperButton.setTitle(Stories.storiesArray[0].choice1, for: .normal)
         buttons.upperButton.setTitleColor(.black, for: .normal)
         buttons.upperButton.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
         buttons.upperButton.layer.cornerRadius = 20
@@ -128,7 +133,7 @@ private extension ViewController {
         buttons.upperButton.tag = 0
         buttons.upperButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
-        buttons.lowerButton.setTitle("Down", for: .normal)
+        buttons.lowerButton.setTitle(Stories.storiesArray[1].choice1, for: .normal)
         buttons.lowerButton.setTitleColor(.black, for: .normal)
         buttons.lowerButton.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
         buttons.lowerButton.layer.cornerRadius = 20
@@ -166,7 +171,14 @@ private extension ViewController {
             }
         })
 
-        progressView.setProgress(progressView.progress + 0.2, animated: true)
+        progressView.setProgress(progressView.progress + 0.25, animated: true)
+        storiesIdCounter += 1
+        guard let newStory = Stories().getStory(by: storiesIdCounter) else { return }
+        textLabel.text = newStory.title
+        upperButton.setTitle(newStory.choice1, for: .normal)
+        lowerButton.setTitle(newStory.choice2, for: .normal)
+        
+        // Логика перехода на другие истории
         switch sender.tag {
             case 0:
             fallthrough
