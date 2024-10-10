@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+/// Основной контроллер представления для приложения QuizApp
 final class ViewController: UIViewController {
     // MARK: - UI Elements
     private let textContainer = UIView()
@@ -30,9 +31,10 @@ final class ViewController: UIViewController {
     }()
     
     // MARK: - Logic Elements
-    var storiesIdCounter: Int = 0
+    private var storiesIdCounter: Int = 0
     
     // MARK: - Life Cycle
+    /// Настройка пользовательского интерфейса и его элементов
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -40,6 +42,7 @@ final class ViewController: UIViewController {
         setupLayout()
     }
     
+    /// Добавление градиента для кнопок после появления представления
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addGradientToView(view: upperButton, gradientColors: [UIColor.upperButtonGradientFirst, UIColor.upperButtonGradientSecond])
