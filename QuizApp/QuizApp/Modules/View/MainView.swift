@@ -21,13 +21,7 @@ final class MainView: UIView {
     private let yellowEllipse = UIImageView(image: UIImage.ellipseYellow)
     private let redEllipse = UIImageView(image: UIImage.ellipseRed)
     
-    private let VStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 15
-        stack.distribution = .fillEqually
-        return stack
-    }()
+    private let buttonsStackView = UIStackView()
     
     // MARK: - Logic Elements
     private var storiesIdCounter: Int = 0
@@ -51,14 +45,13 @@ final class MainView: UIView {
 // MARK: - Private Methods
 private extension MainView {
     func setupViews() {
-        addSubviews(redEllipse, yellowEllipse, textContainer, textLabel, VStack, progressView)
-        
-        VStack.addArrangedSubview(upperButton)
-        VStack.addArrangedSubview(lowerButton)
+        addSubviews(redEllipse, yellowEllipse, textContainer, textLabel, buttonsStackView, progressView)
     }
     
     func setupAppearance() {
         backgroundColor = .background
+        
+        setupButtonsStackView()
         
         // MARK: textContainer Appearance
         textContainer.backgroundColor = .black
@@ -98,7 +91,7 @@ private extension MainView {
             $0.centerY.equalToSuperview()
         }
         
-        VStack.snp.makeConstraints {
+        buttonsStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.top.equalTo(textContainer.snp.bottom).offset(180)
             $0.bottom.equalToSuperview().offset(-80)
@@ -133,7 +126,15 @@ private extension MainView {
         view.layer.shouldRasterize = true
     }
     
-    @objc func buttonTapped(_ sender: UIButton) {
+    func setupButtonsStackView() {
+        buttonsStackView.axis = .vertical
+        buttonsStackView.spacing = 15
+        buttonsStackView.distribution = .fillEqually
+        [upperButton, lowerButton].forEach { buttonsStackView.addArrangedSubview($0) }
+    }
+    
+    @objc
+    func buttonTapped(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1,
                        animations: {
             sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
