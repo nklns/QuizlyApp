@@ -8,7 +8,15 @@
 import UIKit
 import SnapKit
 
+protocol ButtonTappedDelegate: AnyObject {
+    func buttonTapped(_ sender: UIButton)
+}
+
 final class MainView: UIView {
+    // MARK: - Delegates
+    /// Делегат нажатия одной из кнопок
+    weak var delegate: ButtonTappedDelegate?
+    
     // MARK: - UI Elements
     private let textContainer = UIView()
     private let textLabel = UILabel()
@@ -23,9 +31,7 @@ final class MainView: UIView {
     
     private let buttonsStackView = UIStackView()
     
-    // MARK: - Logic Elements
-    private var storiesIdCounter: Int = 0
-    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -38,6 +44,16 @@ final class MainView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Public Methods
+extension MainView {
+    func updateUI(with story: Story) {
+        progressView.setProgress(progressView.progress + 0.25, animated: true)
+        textLabel.text = story.title
+        upperButton.updateTitle(story.choice1)
+        lowerButton.updateTitle(story.choice2)
     }
 }
 
@@ -148,22 +164,22 @@ private extension MainView {
                 sender.transform = CGAffineTransform.identity
             }
         })
-
-        progressView.setProgress(progressView.progress + 0.25, animated: true)
-        storiesIdCounter += 1
-        guard let newStory = Stories().getStory(by: storiesIdCounter) else { return }
-        textLabel.text = newStory.title
-        upperButton.updateTitle(newStory.choice1)
-        lowerButton.updateTitle(newStory.choice2)
-        
-        // Логика перехода на другие истории
-        switch sender.tag {
-            case 0:
-            fallthrough
-            case 1:
-            fallthrough
-            default :
-            break
-        }
+        delegate?.buttonTapped(sender)
+//        progressView.setProgress(progressView.progress + 0.25, animated: true)
+//        storiesIdCounter += 1
+//        guard let newStory = Stories().getStory(by: storiesIdCounter) else { return }
+//        textLabel.text = newStory.title
+//        upperButton.updateTitle(newStory.choice1)
+//        lowerButton.updateTitle(newStory.choice2)
+//        
+//        // Логика перехода на другие истории
+//        switch sender.tag {
+//            case 0:
+//            fallthrough
+//            case 1:
+//            fallthrough
+//            default :
+//            break
+//        }
     }
 }
