@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 /// Структура для хранения кнопок выбора
-struct Buttons {
+enum ButtonType {
     /// Верхняя кнопка выбора
-    let upperButton: UIButton
+    case upperButton
     
     /// Нижняя кнопка выбора
-    let lowerButton: UIButton
+    case lowerButton
 }
 
 /// Модель, представляющая шаг в интерактивной истории

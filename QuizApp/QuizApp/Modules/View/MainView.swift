@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class MainView: UIView {
     // MARK: - UI Elements
@@ -71,7 +72,8 @@ private extension MainView {
         textLabel.font = .systemFont(ofSize: 25, weight: .bold)
         
         // MARK: make buttons Appearance
-        makeButtons(buttons: Buttons(upperButton: upperButton, lowerButton: lowerButton))
+        setupButtonsAppearance(button: upperButton, buttonType: .upperButton)
+        setupButtonsAppearance(button: lowerButton, buttonType: .lowerButton)
         
         // MARK: ProgressView Appearance
         progressView.progressTintColor = .upperButtonGradientFirst
@@ -117,24 +119,22 @@ private extension MainView {
 }
 
 private extension MainView {
-    func makeButtons(buttons: Buttons) {
+    func setupButtonsAppearance(button: UIButton, buttonType: ButtonType) {
+        let title: String
         
-        buttons.upperButton.setTitle(Stories.storiesArray[0].choice1, for: .normal)
-        buttons.upperButton.setTitleColor(.black, for: .normal)
-        buttons.upperButton.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
-        buttons.upperButton.layer.cornerRadius = 20
-        buttons.upperButton.layer.masksToBounds = true
-        buttons.upperButton.tag = 0
-        buttons.upperButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        switch buttonType {
+        case .upperButton:
+            title = Stories.storiesArray[0].choice1
+        case .lowerButton:
+            title = Stories.storiesArray[1].choice1
+        }
         
-        buttons.lowerButton.setTitle(Stories.storiesArray[1].choice1, for: .normal)
-        buttons.lowerButton.setTitleColor(.black, for: .normal)
-        buttons.lowerButton.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
-        buttons.lowerButton.layer.cornerRadius = 20
-        buttons.lowerButton.layer.masksToBounds = true
-        buttons.lowerButton.tag = 1
-        buttons.lowerButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
+        button.layer.cornerRadius = 20
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
     func addShadowToView(view: UIView) {
