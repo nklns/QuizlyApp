@@ -38,6 +38,13 @@ final class ChoiceButton: UIButton {
     }
 }
 
+// MARK: - Public Methods
+extension ChoiceButton {
+    func updateTitle(_ title: String) {
+        buttonTitleLabel.text = title
+    }
+}
+
 // MARK: - Private Methods
 private extension ChoiceButton {
     func setupViews() {

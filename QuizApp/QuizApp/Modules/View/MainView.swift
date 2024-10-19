@@ -38,6 +38,7 @@ final class MainView: UIView {
         setupViews()
         setupAppearance()
         setupLayout()
+        setupBehavior()
     }
     
     @available(*, unavailable)
@@ -55,6 +56,7 @@ private extension MainView {
         VStack.addArrangedSubview(upperButton)
         VStack.addArrangedSubview(lowerButton)
     }
+    
     func setupAppearance() {
         backgroundColor = .background
         
@@ -112,6 +114,13 @@ private extension MainView {
             $0.bottom.equalToSuperview().offset(-70)
         }
     }
+    
+    func setupBehavior() {
+        upperButton.tag = 0
+        lowerButton.tag = 1
+        upperButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        lowerButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
 }
 
 private extension MainView {
@@ -138,8 +147,8 @@ private extension MainView {
         storiesIdCounter += 1
         guard let newStory = Stories().getStory(by: storiesIdCounter) else { return }
         textLabel.text = newStory.title
-        upperButton.setTitle(newStory.choice1, for: .normal)
-        lowerButton.setTitle(newStory.choice2, for: .normal)
+        upperButton.updateTitle(newStory.choice1)
+        lowerButton.updateTitle(newStory.choice2)
         
         // Логика перехода на другие истории
         switch sender.tag {
