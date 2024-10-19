@@ -46,7 +46,9 @@ private extension ChoiceButton {
     
     func setupAppearance() {
         backgroundColor = .clear
-        self.layer.insertSublayer(gradient, at: 0)
+        layer.insertSublayer(gradient, at: 0)
+        layer.cornerRadius = 20
+        layer.masksToBounds = true
         
         setupTitleLabel()
         setupGradient()

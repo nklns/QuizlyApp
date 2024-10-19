@@ -13,8 +13,8 @@ final class MainView: UIView {
     private let textContainer = UIView()
     private let textLabel = UILabel()
     
-    private let upperButton = UIButton()
-    private let lowerButton = UIButton()
+    private let upperButton = ChoiceButton(choiceButtonType: .upperButton)
+    private let lowerButton = ChoiceButton(choiceButtonType: .lowerButton)
     
     private let progressView = UIProgressView()
     
@@ -71,10 +71,6 @@ private extension MainView {
         textLabel.numberOfLines = 0
         textLabel.font = .systemFont(ofSize: 25, weight: .bold)
         
-        // MARK: make buttons Appearance
-        setupButtonsAppearance(button: upperButton, buttonType: .upperButton)
-        setupButtonsAppearance(button: lowerButton, buttonType: .lowerButton)
-        
         // MARK: ProgressView Appearance
         progressView.progressTintColor = .upperButtonGradientFirst
         progressView.progress = 0.0
@@ -119,24 +115,6 @@ private extension MainView {
 }
 
 private extension MainView {
-    func setupButtonsAppearance(button: UIButton, buttonType: ButtonType) {
-        let title: String
-        
-        switch buttonType {
-        case .upperButton:
-            title = Stories.storiesArray[0].choice1
-        case .lowerButton:
-            title = Stories.storiesArray[1].choice1
-        }
-        
-        button.setTitle(title, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: .init(25), weight: .bold)
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-    
     func addShadowToView(view: UIView) {
         view.layer.masksToBounds = false
         view.layer.shadowColor = UIColor.black.cgColor
@@ -144,15 +122,6 @@ private extension MainView {
         view.layer.shadowOffset = .init(width: 0, height: 4)
         view.layer.shadowRadius = 3
         view.layer.shouldRasterize = true
-    }
-    
-    func addGradientToView(view: UIView, gradientColors: [UIColor]) {
-        let gradient = CAGradientLayer()
-        gradient.colors = gradientColors.map { $0.cgColor }
-        gradient.startPoint = .init(x: 0, y: 0.5)
-        gradient.endPoint = .init(x: 1, y: 0.5)
-        gradient.frame = view.bounds
-        view.layer.insertSublayer(gradient, at: 0)
     }
     
     @objc func buttonTapped(_ sender: UIButton) {

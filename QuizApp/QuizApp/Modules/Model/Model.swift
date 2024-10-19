@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// Структура для хранения кнопок выбора
-enum ButtonType {
+enum ChoiceButtonType {
     /// Верхняя кнопка выбора
     case upperButton
     
