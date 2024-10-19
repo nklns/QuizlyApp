@@ -41,7 +41,6 @@ final class MainView: UIView {
     }
 }
 
-
 // MARK: - Private Methods
 private extension MainView {
     func setupViews() {
@@ -52,24 +51,9 @@ private extension MainView {
         backgroundColor = .background
         
         setupButtonsStackView()
-        
-        // MARK: textContainer Appearance
-        textContainer.backgroundColor = .black
-        textContainer.layer.cornerRadius = 20
-        textContainer.clipsToBounds = true
-        addShadowToView(view: textContainer)
-        
-        // MARK: textLabel Appearance
-        textLabel.textColor = .white
-        textLabel.text = Stories.storiesArray[0].title
-        textLabel.textAlignment = .left
-        textLabel.numberOfLines = 0
-        textLabel.font = .systemFont(ofSize: 25, weight: .bold)
-        
-        // MARK: ProgressView Appearance
-        progressView.progressTintColor = .upperButtonGradientFirst
-        progressView.progress = 0.0
-        addShadowToView(view: progressView)
+        setupTextContainer()
+        setupTextLabel()
+        setupProgressView()
     }
     
     func setupLayout() {
@@ -126,11 +110,32 @@ private extension MainView {
         view.layer.shouldRasterize = true
     }
     
+    func setupTextContainer() {
+        textContainer.backgroundColor = .black
+        textContainer.layer.cornerRadius = 20
+        textContainer.clipsToBounds = true
+        addShadowToView(view: textContainer)
+    }
+
     func setupButtonsStackView() {
         buttonsStackView.axis = .vertical
         buttonsStackView.spacing = 15
         buttonsStackView.distribution = .fillEqually
         [upperButton, lowerButton].forEach { buttonsStackView.addArrangedSubview($0) }
+    }
+    
+    func setupProgressView() {
+        progressView.progressTintColor = .upperButtonGradientFirst
+        progressView.progress = 0.0
+        addShadowToView(view: progressView)
+    }
+    
+    func setupTextLabel() {
+        textLabel.textColor = .white
+        textLabel.text = Stories.storiesArray[0].title
+        textLabel.textAlignment = .left
+        textLabel.numberOfLines = 0
+        textLabel.font = .systemFont(ofSize: 25, weight: .bold)
     }
     
     @objc
