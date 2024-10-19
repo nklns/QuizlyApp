@@ -165,21 +165,5 @@ private extension MainView {
             }
         })
         delegate?.buttonTapped(sender)
-//        progressView.setProgress(progressView.progress + 0.25, animated: true)
-//        storiesIdCounter += 1
-//        guard let newStory = Stories().getStory(by: storiesIdCounter) else { return }
-//        textLabel.text = newStory.title
-//        upperButton.updateTitle(newStory.choice1)
-//        lowerButton.updateTitle(newStory.choice2)
-//        
-//        // Логика перехода на другие истории
-//        switch sender.tag {
-//            case 0:
-//            fallthrough
-//            case 1:
-//            fallthrough
-//            default :
-//            break
-//        }
     }
 }
